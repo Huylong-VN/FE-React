@@ -150,11 +150,11 @@ export default function SignIn() {
           </Grid>
         </form>
         <FacebookLogin
-          appId="803769526888491"
+          appId="382341756581069"
+          autoLoad={false}
+          fields="name,email,picture"
+          onClick={responseFacebook}
           callback={responseFacebook}
-          cssClass="my-facebook-button-class"
-          icon="fa-facebook"
-          
         />
       </div>
       <Box mt={8}>
