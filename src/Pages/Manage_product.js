@@ -8,8 +8,8 @@ const Manage_product = () => {
   return (
     <ProductContextProvider>
       <Create />
-      <TableData/>
       <Search />
+      <TableData/>
       <PaginationCpn />
     </ProductContextProvider>
   );

@@ -17,6 +17,7 @@ import userApi from "../api/userApi";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { SpinData } from "../Components/Common";
+import FacebookLogin from "react-facebook-login";
 toast.configure();
 
 function Copyright() {
@@ -52,20 +53,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
 export default function SignIn() {
-
+  const responseFacebook = (response) => {
+    console.log(response);
+  };
 
   const classes = useStyles();
-
 
   const [username, setusername] = useState("");
   const [password, setpassword] = useState("");
   const [loading, setloading] = useState(false);
   const history = useHistory();
-
-
 
   const onSubmitLogin = async () => {
     setloading(true);
@@ -78,26 +76,18 @@ export default function SignIn() {
         localStorage.setItem("role", response.roles);
         toast.success("Đăng nhập thành công");
         console.log(response.roles.length);
-        setTimeout(()=>{
-          localStorage.removeItem("role");
-          localStorage.removeItem("token");
-          localStorage.removeItem("Id");
-          alert("Bạn đã hết thời gian đăng nhập vui lòng đăng nhập lại !!1")
-          React.history.push("./login")
-      },10800000)
         if (response.roles.length > 0) {
           return history.replace("/admin");
         }
         return history.replace("/home");
       })
       .catch((error) => {
+        console.log(error);
         toast.warning(error.response.data);
       });
     setloading(false);
   };
 
-
-  
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -108,7 +98,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form action="#" className={classes.form} noValidate>
           <TextField
             variant="outlined"
             margin="normal"
@@ -159,6 +149,13 @@ export default function SignIn() {
             </Grid>
           </Grid>
         </form>
+        <FacebookLogin
+          appId="803769526888491"
+          callback={responseFacebook}
+          cssClass="my-facebook-button-class"
+          icon="fa-facebook"
+          
+        />
       </div>
       <Box mt={8}>
         <Copyright />

@@ -1,35 +1,26 @@
 import "./client.css";
 import {
   Layout,
-  Menu,
   Breadcrumb,
   PageHeader,
   Affix,
   Button,
   Drawer,
 } from "antd";
-import {
-  UserOutlined,
-  HomeOutlined,
-  MenuFoldOutlined,
-  ExportOutlined,
-  LoginOutlined,
-} from "@ant-design/icons";
-import { Link } from "react-router-dom";
-import { useState, useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
+
+
+import { useState } from "react";
+import { Nav } from "../Components/Nav";
+
 
 const { Header, Content, Footer } = Layout;
 
 const Client = (props) => {
-  const contextAu = useContext(AuthContext);
-  const { isAth, toggleAuth } = contextAu;
-
-  const role=localStorage.getItem("role")!==null?true:false
   const [visible, setvisible] = useState();
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <div className="site-drawer-render-in-current-wrapper">
+      <Nav />
+      {/* <div className="site-drawer-render-in-current-wrapper">
         <Affix offsetTop="0">
           <Button type="light" onClick={() => setvisible(true)}>
             <MenuFoldOutlined />
@@ -43,34 +34,9 @@ const Client = (props) => {
           visible={visible}
         >
           <h2>Menu</h2>
-          <Menu theme="light" defaultSelectedKeys={1} mode="inline">
-            <Menu.Item key="1" icon={<HomeOutlined />}>
-              <Link to="/">Home</Link>
-            </Menu.Item>
-            <Menu.Item key="2" icon={<UserOutlined />}>
-              <Link to="/about">About Us</Link>
-            </Menu.Item>
-            {role===true?(<Menu.Item key="4" icon={<ExportOutlined />}>
-                <Link to="/admin">
-                  Admin DashBoard
-                </Link>
-              </Menu.Item>):""}
-            {isAth ? (
-              <Menu.Item key="3" icon={<LoginOutlined />}>
-                <Link to="/login" onClick={toggleAuth}>
-                  Login
-                </Link>
-              </Menu.Item>
-            ) : (
-              <Menu.Item key="3" icon={<ExportOutlined />}>
-                <Link to="/home" onClick={toggleAuth}>
-                  LogOut
-                </Link>
-              </Menu.Item>
-            )} 
-          </Menu>
+        <Nav/>
         </Drawer>
-      </div>
+      </div> */}
       <Layout className="site-layout">
         <Header
           className="site-layout-background"

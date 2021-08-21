@@ -1,12 +1,14 @@
 import React from "react";
 import { WalletOutlined, HomeOutlined, UserOutlined,ExportOutlined} from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
 import { Menu } from "antd";
 
 export const MenuAdmin = () => {
-  const contextAu = React.useContext(AuthContext);
-  const { toggleAuth } = contextAu;
+  const toggleAuth  = ()=>{
+    localStorage.removeItem("role");
+    localStorage.removeItem("token");
+    localStorage.removeItem("Id");
+  };
   return (
     <Menu theme="light" defaultSelectedKeys={1} mode="inline">
       <Menu.Item key="1" icon={<HomeOutlined />}>

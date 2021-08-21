@@ -4,7 +4,6 @@ import { Card, Image, Col, Row } from "antd";
 import { SpinData } from "../Common";
 
 const Item = ({ loading, products }) => {
-
   if (loading === true) {
     return (
       <Row gutter={[16, 16]}>
@@ -12,16 +11,14 @@ const Item = ({ loading, products }) => {
           <Col key={product.id} span={6} xs={12} sm={8} xxl={6}>
             <Card
               size="small"
-              extra={<Link href="#">More</Link>}
+              extra={<Link to="about">More</Link>}
               hoverable
               title={product.name}
             >
               <Image
                 alt={product.name}
                 className="product_image"
-                src={
-                  "https://anhhuy37.herokuapp.com/user-content/" + product.image
-                }
+                src={process.env.REACT_APP_BASE_IMGS + product.image}
               />
               <Card.Meta description={product.description} />
             </Card>
@@ -30,7 +27,7 @@ const Item = ({ loading, products }) => {
       </Row>
     );
   }
-  return <SpinData position="center"/>;
+  return <SpinData position="center" />;
 };
 
 export default Item;

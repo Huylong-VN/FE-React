@@ -8,8 +8,6 @@ import admin from "./Layouts/admin";
 import Manage_users from "./Pages/Manage_users";
 import Manage_product from "./Pages/Manage_product";
 import { DashBoard } from "./Components/Admin/DashBoard";
-// import UserContextProvider from "./context/userContext";
-import AuthContextProvider from "./context/AuthContext";
 
 const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
   <Route
@@ -25,20 +23,11 @@ const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
 const App = () => {
   return (
     <Router>
-      <AuthContextProvider>
         <AppRoute
           path="/admin"
           exact
           layout={admin}
-          component={() => {
-            if (
-              localStorage.getItem("token") == null &&
-              localStorage.getItem("role") == null
-            ) {
-              return <Redirect to="/" />;
-            }
-            return <DashBoard />;
-          }}
+          component={() => localStorage.getItem("token") == null ?<Redirect to="/" />:<DashBoard />}
         />
         <AppRoute path="/" exact layout={Client} component={Home} />
         <AppRoute path="/home" exact layout={Client} component={Home} />
@@ -58,7 +47,6 @@ const App = () => {
             layout={admin}
             component={Manage_users}
           />
-      </AuthContextProvider>
     </Router>
   );
 };

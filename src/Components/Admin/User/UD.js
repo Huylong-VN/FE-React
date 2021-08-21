@@ -6,7 +6,6 @@ import { SpinData } from "../../Common";
 import { UserContext } from "../../../context/userContext";
 import Search from "../../../Components/Search";
 
-
 const EditableCell = ({
   editing,
   dataIndex,
@@ -42,22 +41,21 @@ const EditableCell = ({
 const EditableTable = () => {
   //Context
   const contextDT = useContext(UserContext);
-  const { load, Datas, Delete, Update, handlePageChange, pagination,handleFiltersChange } =
-    contextDT;
-
-
-
-
+  const {
+    load,
+    Datas,
+    Delete,
+    Update,
+    handlePageChange,
+    pagination,
+    handleFiltersChange,
+  } = contextDT;
 
   const [form] = Form.useForm();
   const [editingid, setEditingid] = useState("");
   const [runUpdate, setrunUpdate] = useState(false);
   const [LoadDelete, setLoadDelete] = useState(false);
   const isEditing = (record) => record.id === editingid;
-
-
-
-
 
   const edit = (record) => {
     form.setFieldsValue({
@@ -82,12 +80,6 @@ const EditableTable = () => {
     await Delete(id);
     setLoadDelete(false);
   };
-
-
-
-
-
-
 
   const columns = [
     {
@@ -168,7 +160,9 @@ const EditableTable = () => {
       key: "x",
       dataIndex: "operation",
       render: (_, record) => {
-        <Button onClick={() => remove(record)}>{LoadDelete!==true?(<SpinData />):"Delete"}</Button>
+        <Button onClick={() => remove(record)}>
+          {LoadDelete !== true ? <SpinData /> : "Delete"}
+        </Button>;
       },
     },
     {
@@ -194,43 +188,37 @@ const EditableTable = () => {
     };
   });
 
-
-
-
-  if (load === true) {
-    return (
-      <>
-        <Search onSubmit={(keyword) => handleFiltersChange(keyword)} />
-        <Form form={form} component={false}>
-          <Table
-            components={{
-              body: {
-                cell: EditableCell,
-              },
-            }}
-            bordered
-            rowKey={(Datas) => Datas.id}
-            dataSource={Datas}
-            columns={mergedColumns}
-            rowClassName="editable-row"
-            pagination={false}
-          />
-        </Form>
-        <Row justify="center">
-          <Pagination
-            current={pagination.pageIndex}
-            defaultPageSize={6}
-            onChange={(page, pageSize) => handlePageChange(page, pageSize)}
-            total={pagination.totalRows}
-            showSizeChanger
-            pageSizeOptions={[6, 10, 20, 30]}
-          />
-        </Row>
-      </>
-    );
-  }
-
-  return <SpinData position="center" />;
+  return (
+    <>
+      <Search onSubmit={(keyword) => handleFiltersChange(keyword)} />
+      <Form form={form} component={false}>
+        <Table
+          loading={load === false}
+          components={{
+            body: {
+              cell: EditableCell,
+            },
+          }}
+          bordered
+          rowKey={(Datas) => Datas.id}
+          dataSource={Datas}
+          columns={mergedColumns}
+          rowClassName="editable-row"
+          pagination={false}
+        />
+      </Form>
+      <Row justify="center">
+        <Pagination
+          current={pagination.pageIndex}
+          defaultPageSize={6}
+          onChange={(page, pageSize) => handlePageChange(page, pageSize)}
+          total={pagination.totalRows}
+          showSizeChanger
+          pageSizeOptions={[6, 10, 20, 30]}
+        />
+      </Row>
+    </>
+  );
 };
 
 export default EditableTable;

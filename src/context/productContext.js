@@ -48,45 +48,23 @@ const ProductContextProvider = ({ children }) => {
   //Add a new
   const Add = async (data) => {
     await productApi
-      .register(data)
-      .then((response) => {
-        console.log(response);
-        openNotificationWithIcon("success", "Đăng kí thành Công");
+      .add(data)
+      .then(() => {
+        openNotificationWithIcon("success", "Create Success");
       })
       .catch((error) => {
         openNotificationWithIcon("error", error.response.data);
       });
-    getAll(filters);
+    // getAll(filters);
   };
 
   //Update user
-  const Update = async (id, row) => {
+  const Update = async (values) => {
     await productApi
-      .update({
-        userId: localStorage.getItem("Id"),
-        id: id,
-        CategoryId: row.categoryId,
-        Name: row.name,
-        Price: row.price,
-        Description: row.description,
-       
-      })
+      .update(values)
       .then(() => {
         openNotificationWithIcon("success", "Update Success");
-        setData(
-          Datas.map((item) =>
-            item.id === id
-              ? {
-                  ...item,
-                  dob: row.dob,
-                  email: row.email,
-                  firstname: row.firstName,
-                  lastname: row.lastName,
-                  phone: row.phoneNumber,
-                }
-              : item
-          )
-        );
+        getAll(filters);
       })
       .catch((err) => {
         openNotificationWithIcon("error", err);
@@ -96,20 +74,13 @@ const ProductContextProvider = ({ children }) => {
   //Delete
   const Delete = async (id) => {
     await productApi
-      .delete({
-        userId: localStorage.getItem("Id"),
-        id: id,
-      })
+      .delete(id)
       .then(() => {
-        getAll(filters);
-        // setData(
-        //  Datas.filter((data)=>data.id === id)
-        //   ))
-
         openNotificationWithIcon("success", "Delete Success");
+        getAll(filters);
       })
       .catch((err) => {
-        openNotificationWithIcon("error", err.response.data);
+        openNotificationWithIcon("error", err);
       });
   };
 

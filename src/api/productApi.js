@@ -7,22 +7,51 @@ const productApi=({
             Authorization:"Bearer "+localStorage.getItem("token")
         }})
     },
-    register: async(params)=>{
+    add: async(params)=>{
         const url='/products/create';
         return await axiosClient.post(url,params,{headers:{
-            Authorization:"Bearer "+localStorage.getItem("token")
+            Authorization:"Bearer "+localStorage.getItem("token"),
         }})
     },
     delete:async(params)=>{
-        const url='/products/';
-        return await axiosClient.delete(url,params,{headers:{
+        const url='/products/'+params;
+        return await axiosClient.delete(url,{headers:{
             Authorization:"Bearer "+localStorage.getItem("token")
         }})
     },
     update:async(params)=>{
         const url='/products/';
-        console.log(params)
-        return await axiosClient.update(url,params,{headers:{
+        return await axiosClient.put(url,params,{headers:{
+            Authorization:"Bearer "+localStorage.getItem("token")
+        }})
+    },
+    GetCategoryAssign: async(params)=>{
+        const url='/products/categoryassign/'+params;
+        return await axiosClient.get(url,{headers:{
+            Authorization:"Bearer "+localStorage.getItem("token")
+        }})
+    },
+    CategoryAssign:async(params)=>{
+        const url='products/categoryassign';
+        return await axiosClient.post(url,params,{headers:{
+            Authorization:"Bearer "+localStorage.getItem("token")
+        }})
+    },
+    ListImage: async(params)=>{
+        const url='products/ProductImage/'+params;
+        return await axiosClient.get(url,{headers:{
+            Authorization:"Bearer "+localStorage.getItem("token")
+        }})
+    },
+    AddImage:async(params)=>{
+        const url='products/image/';
+        return await axiosClient.post(url,params,{headers:{
+            Authorization:"Bearer "+localStorage.getItem("token")
+        }})
+    },
+    DeleteImage: async(params)=>{
+        const url='products/ProductImage/'+params;
+        return await axiosClient.delete(url,{headers:{
             Authorization:"Bearer "+localStorage.getItem("token")
         }})
     }
